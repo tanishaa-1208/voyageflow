@@ -1,0 +1,156 @@
+/* page visibility */
+.page { 
+  display: none; 
+  min-height: calc(100vh - 64px);
+  padding-bottom: 40px;
+}
+
+.page.active { 
+  display: block; 
+}
+
+/* background + fonts */
+body {
+  font-family: 'Inter', sans-serif;
+  color: #ffffff;
+
+  background:
+    url("Untitled design.png") center/cover no-repeat fixed,
+    linear-gradient(135deg, #6d83f2, #8a54e3);
+  background-blend-mode: overlay;
+
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* light mode adjustments */
+body.light-mode {
+  color: #0b1220;
+  background:
+    linear-gradient(135deg, #f6f8ff, #fff7f0);
+  background-blend-mode: normal;
+}
+body.light-mode .destination-card,
+body.light-mode .p-5,
+body.light-mode .rounded-xl {
+  background: rgba(255,255,255,0.92) !important;
+  color: #0b1220 !important;
+  border-color: rgba(16,24,40,0.06) !important;
+}
+body.light-mode input,
+body.light-mode select,
+body.light-mode textarea {
+  background: #fff !important;
+  color: #0b1220 !important;
+}
+
+/* small spinner */
+.spinner {
+  border-top-color: white;
+}
+
+/* simple entrance animations */
+@keyframes enterUp {
+  from { transform: translateY(14px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+.animate-enter-up {
+  animation: enterUp .45s ease-out both;
+}
+
+/* utility tweaks for mobile */
+@media (max-width: 640px) {
+  .logo { font-size: 34px; }
+  .page { padding: 12px; }
+  .destination-card { padding: 14px; }
+  .max-w-6xl { padding-left: 8px; padding-right: 8px; }
+}
+
+/* keep Playfair for logo if available */
+.logo { font-family: 'Playfair Display', serif; }
+
+/* focus outline for accessibility */
+:focus { outline: 2px solid rgba(255,255,255,0.28); outline-offset: 2px; }
+
+/* subtle scale helpers */
+.hover-scale { transition: transform .18s ease; }
+
+
+/* ------------------------------
+   LIGHT / DARK MODE BACKGROUNDS
+--------------------------------*/
+
+body {
+  background: url("DARK.png") center/cover no-repeat fixed;
+  transition: background 0.5s ease-in-out;
+}
+
+/* LIGHT MODE */
+body.light-mode {
+  background: url("LIGHT.png") center/cover no-repeat fixed;
+}
+
+/* Make text readable in light mode */
+body.light-mode .page,
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
+body.light-mode p,
+body.light-mode label,
+body.light-mode input,
+body.light-mode select {
+  color: #0f172a !important;
+}
+
+/* Keep translucent cards looking good in light mode */
+body.light-mode .center-card,
+body.light-mode .destination-card,
+body.light-mode .form-container,
+body.light-mode .calc-box,
+body.light-mode .summary-bar,
+body.light-mode .confirmation-card,
+body.light-mode .conf-box {
+  background: rgba(255,255,255,0.65) !important;
+  color: #0f172a !important;
+}
+
+/* Search box turns light */
+body.light-mode input[type="text"] {
+  background: rgba(255,255,255,0.85) !important;
+  color: #0f172a !important;
+}
+
+
+/* ========= TOP BUTTON (Back + Theme Toggle) FIX ========= */
+
+/* DO NOT touch the registration box margin anymore */
+.registration-page .form-container {
+  margin-top: 80px !important;   /* keep form exactly where it was originally */
+}
+
+/* Payment option buttons */
+.payment-option {
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.payment-option:hover {
+    transform: translateY(-3px);
+    background: rgba(255,255,255,0.2);
+}
+
+.payment-option.selected {
+    background: rgba(255,255,255,0.35);
+    border-color: #f97316;
+    color: #fff;
+    transform: scale(1.02);
+    box-shadow: 0 0 12px rgba(249,115,22,0.5);
+}

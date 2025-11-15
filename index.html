@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>VoyageFlow</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- jsPDF for PDF generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="min-h-screen antialiased">
+
+
+
+  <!-- LOADER (full screen) -->
+  <div id="loader" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 text-white hidden">
+    <div class="flex flex-col items-center gap-4">
+      <div class="spinner w-16 h-16 rounded-full border-4 border-white/30 border-t-white animate-spin"></div>
+      <div id="loaderText" class="text-lg">Loading...</div>
+    </div>
+  </div>
+
+  <!-- Top bar with mode toggle -->
+  <header class="w-full flex justify-end p-4">
+    <div class="flex items-center gap-3 mr-4">
+      <button id="themeSwitcher"
+  style="
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 9999;
+    padding: 10px 18px;
+    border-radius: 40px;
+    border: 1px solid rgba(255,255,255,0.3);
+    backdrop-filter: blur(12px);
+    cursor: pointer;
+    font-size: 22px;
+  ">
+  🌙 / ☀️
+</button>
+
+    </div>
+  </header>
+
+  <!-- PAGE 1 — WELCOME -->
+  <div id="welcomePage" class="page active px-4">
+    <div class="max-w-4xl mx-auto my-12 p-10 md:p-12 rounded-2xl bg-white/12 backdrop-blur-xl border border-white/12 shadow-2xl text-center transform transition duration-500 ease-out animate-enter-up">
+      <h1 class="logo text-5xl md:text-6xl font-semibold text-white mb-3">VoyageFlow</h1>
+      <p class="italic font-semibold text-white/90 text-base md:text-lg mb-6">Your journey starts here ✈️</p>
+      <button class="px-8 py-3 rounded-full bg-gradient-to-r from-orange-400 to-orange-600 text-white font-semibold shadow-lg transform transition hover:-translate-y-1"
+              onclick="showPage('registrationPage')">
+        Get Started
+      </button>
+    </div>
+  </div>
+
+  <!-- PAGE 2 — REGISTRATION -->
+  <div id="registrationPage" class="page px-4">
+    <button class="text-white text-lg mb-4 ml-2" onclick="showPage('welcomePage')">← Back</button>
+
+    <div class="max-w-3xl mx-auto p-6 md:p-8 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/12 shadow-xl transform transition animate-enter-up">
+      <h1 class="text-2xl md:text-3xl font-bold text-white mb-4">Registration</h1>
+
+      <form id="registrationForm">
+        <div class="grid grid-cols-1 gap-4">
+          <div>
+            <label class="text-white text-sm font-semibold mb-1 block">Full Name *</label>
+            <input id="name" type="text" required class="w-full px-3 py-2 rounded-lg bg-white/20 text-white outline-none focus:bg-white/30 focus:shadow transition" />
+          </div>
+
+          <div>
+            <label class="text-white text-sm font-semibold mb-1 block">Email ID *</label>
+            <input id="email" type="email" required class="w-full px-3 py-2 rounded-lg bg-white/20 text-white outline-none focus:bg-white/30 focus:shadow transition" />
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="text-white text-sm font-semibold mb-1 block">Phone Number *</label>
+              <input id="phone" pattern="[0-9]{10}" required class="w-full px-3 py-2 rounded-lg bg-white/20 text-white outline-none focus:bg-white/30 focus:shadow transition" />
+            </div>
+
+            <div>
+              <label class="text-white text-sm font-semibold mb-1 block">PIN Code *</label>
+              <input id="pin" pattern="[0-9]{6}" required class="w-full px-3 py-2 rounded-lg bg-white/20 text-white outline-none focus:bg-white/30 focus:shadow transition" />
+            </div>
+          </div>
+
+          <div>
+            <label class="text-white text-sm font-semibold mb-1 block">Country *</label>
+            <select id="country" required class="w-full px-3 py-2 rounded-lg bg-white/20 text-white outline-none focus:bg-white/30 focus:shadow transition">
+              <option value="">Select Country</option>
+              <option>India</option>
+              <option>United States</option>
+              <option>United Kingdom</option>
+              <option>Canada</option>
+              <option>Australia</option>
+              <option>Germany</option>
+              <option>France</option>
+              <option>Japan</option>
+              <option>Singapore</option>
+              <option>Brazil</option>
+              <option>Italy</option>
+              <option>Spain</option>
+              <option>South Korea</option>
+              <option>Mexico</option>
+              <option>China</option>
+              <option>New Zealand</option>
+              <option>UAE</option>
+              <option>Thailand</option>
+              <option>Malaysia</option>
+              <option>South Africa</option>
+            </select>
+          </div>
+
+          <div class="flex gap-3 mt-2">
+            <button class="px-5 py-2 rounded-full bg-gradient-to-r from-orange-400 to-orange-600 text-white font-semibold shadow hover:-translate-y-1 transition" type="submit">Submit & Continue</button>
+            <button class="px-4 py-2 rounded-lg border border-white/20 text-white hover:bg-white/8 transition" type="button" onclick="showPage('welcomePage')">Cancel</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- PAGE 3 — DESTINATIONS -->
+  <div id="destinationsPage" class="page px-4">
+    <button class="text-white text-lg mb-4 ml-2" onclick="showPage('registrationPage')">← Back</button>
+
+    <h1 class="text-center text-white text-3xl md:text-4xl font-bold mb-4">Destination Showcase</h1>
+
+    <div class="w-full max-w-3xl mx-auto mb-6">
+      <input id="searchInput" placeholder="Search destinations..." class="w-full px-3 py-2 rounded-lg bg-white/20 text-white placeholder-white/70 outline-none focus:bg-white/30 focus:shadow transition" />
+    </div>
+
+    <div class="w-full max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+      <!-- 12 destination cards -->
+      <div class="destination-card rounded-xl p-5 bg-white/10 backdrop-blur-md border border-white/18 text-center cursor-pointer transition transform hover:-translate-y-2 hover:scale-102 hover:shadow-2xl" data-name="paris">
+        <div class="text-3xl mb-2">🗼</div>
+        <div class="text-lg font-semibold text-white">Paris, France</div>
+        <div class="text-sm text-white/80 mt-1">Culture & romance</div>
+      </div>
+
+      <div class="destination-card rounded-xl p-5 bg-white/10 backdrop-blur-md border border-white/18 text-center cursor-pointer transition transform hover:-translate-y-2 hover:scale-102 hover:shadow-2xl" data-name="tokyo">
+        <div class="text-3xl mb-2">🏯</div>
+        <div class="text-lg font-semibold text-white">Tokyo, Japan</div>
+        <div class="text-sm text-white/80 mt-1">Tradition & tech</div>
+      </div>
+
+      <div class="destination-card rounded-xl p-5 bg-white/10 backdrop-blur-md border border-white/18 text-center cursor-pointer transition transform hover:-translate-y-2 hover:scale-102 hover:shadow-2xl" data-name="bali">
+        <div class="text-3xl mb-2">🏝️</div>
+        <div class="text-lg font-semibold text-white">Bali, Indonesia</div>
+        <div class="text-sm text-white/80 mt-1">Beaches & nature</div>
+      </div>
+
+      <div class="destination-card rounded-xl p-5 bg-white/10 backdrop-blur-md border border-white/18 text-center cursor-pointer transition transform hover:-translate-y-2 hover:scale-102 hover:shadow-2xl" data-name="newyork">
+        <div class="text-3xl mb-2">🗽</div>
+        <div class="text-lg font-semibold text-white">New York, USA</div>
+        <div class="text-sm text-white/80 mt-1">The city vibe</div>
+      </div>
+
+      <div class="destination-card rounded-xl p-5 bg-white/10 backdrop-blur-md border border-white/18 text-center cursor-pointer transition transform hover:-translate-y-2 hover:scale-102 hover:shadow-2xl" data-name="dubai">
+        <div class="text-3xl mb-2">🏙️</div>
+        <div class="text-lg font-semibold text-white">Dubai, UAE</div>
+        <div class="text-sm text-white/80 mt-1">Luxury & desert</div>
+      </div>
+
+      <div class="destination-card rounded-xl p-5 bg-white/10 backdrop-blur-md border border-white/18 text-center cursor-pointer transition transform hover:-translate-y-2 hover:scale-102 hover:shadow-2xl" data-name="london">
+        <div class="text-3xl mb-2">🎡</div>
+        <div class="text-lg font-semibold text-white">London, UK</div>
+        <div class="text-sm text-white/80 mt-1">History & culture</div>
+      </div>
+
+      <!-- More destinations -->
+      <div class="destination-card rounded-xl p-5 bg-white/10 backdrop-blur-md border border-white/18 text-center cursor-pointer transition transform hover:-translate-y-2 hover:scale-102 hover:shadow-2xl" data-name="sydney">
+        <div class="text-3xl mb-2">🌊</div>
+        <div class="text-lg font-semibold text-white">Sydney, Australia</div>
+        <div class="text-sm text-white/80 mt-1">Beaches & city</div>
+      </div>
+
+      <div class="destination-card rounded-xl p-5 bg-white/10 backdrop-blur-md border border-white/18 text-center cursor-pointer transition transform hover:-translate-y-2 hover:scale-102 hover:shadow-2xl" data-name="rome">
+        <div class="text-3xl mb-2">🏛️</div>
+        <div class="text-lg font-semibold text-white">Rome, Italy</div>
+        <div class="text-sm text-white/80 mt-1">Ancient wonders</div>
+      </div>
+
+      <div class="destination-card rounded-xl p-5 bg-white/10 backdrop-blur-md border border-white/18 text-center cursor-pointer transition transform hover:-translate-y-2 hover:scale-102 hover:shadow-2xl" data-name="rio">
+        <div class="text-3xl mb-2">🏖️</div>
+        <div class="text-lg font-semibold text-white">Rio, Brazil</div>
+        <div class="text-sm text-white/80 mt-1">Carnival & coast</div>
+      </div>
+
+      <div class="destination-card rounded-xl p-5 bg-white/10 backdrop-blur-md border border-white/18 text-center cursor-pointer transition transform hover:-translate-y-2 hover:scale-102 hover:shadow-2xl" data-name="cape">
+        <div class="text-3xl mb-2">🦁</div>
+        <div class="text-lg font-semibold text-white">Cape Town, South Africa</div>
+        <div class="text-sm text-white/80 mt-1">Nature & wine</div>
+      </div>
+
+      <div class="destination-card rounded-xl p-5 bg-white/10 backdrop-blur-md border border-white/18 text-center cursor-pointer transition transform hover:-translate-y-2 hover:scale-102 hover:shadow-2xl" data-name="seoul">
+        <div class="text-3xl mb-2">🎎</div>
+        <div class="text-lg font-semibold text-white">Seoul, S. Korea</div>
+        <div class="text-sm text-white/80 mt-1">Food & culture</div>
+      </div>
+
+      <div class="destination-card rounded-xl p-5 bg-white/10 backdrop-blur-md border border-white/18 text-center cursor-pointer transition transform hover:-translate-y-2 hover:scale-102 hover:shadow-2xl" data-name="giza">
+        <div class="text-3xl mb-2">🏜️</div>
+        <div class="text-lg font-semibold text-white">Giza, Egypt</div>
+        <div class="text-sm text-white/80 mt-1">History & pyramids</div>
+      </div>
+
+    </div>
+
+    <div class="text-center mt-8">
+      <button onclick="goToCalculator()" class="px-6 py-2 rounded-full bg-gradient-to-r from-orange-400 to-orange-600 text-white font-semibold shadow hover:-translate-y-1 transition">Go to Calculator</button>
+    </div>
+  </div>
+
+  <!-- PAGE 4 — CALCULATOR -->
+  <div id="calculatorPage" class="page px-4">
+    <button class="text-white text-lg mb-4 ml-2" onclick="showPage('destinationsPage')">← Back</button>
+
+    <div class="max-w-6xl mx-auto p-4">
+      <h1 class="text-white text-3xl md:text-4xl font-bold mb-4">Trip Itinerary & Price Calculator</h1>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+
+        <!-- TRAVEL OPTIONS -->
+        <div class="p-5 rounded-xl bg-white/22 backdrop-blur-xl border border-white/30 shadow-lg">
+          <div class="text-white font-extrabold text-lg mb-3">Travel Options</div>
+          <ul class="space-y-3 text-white/90">
+            <li><label class="flex gap-3 items-start"><input type="checkbox" data-price="10000" class="calc-option mt-1 scale-110"> Economy Flight — ₹10,000</label></li>
+            <li><label class="flex gap-3 items-start"><input type="checkbox" data-price="20000" class="calc-option mt-1 scale-110"> Business Flight — ₹20,000</label></li>
+            <li><label class="flex gap-3 items-start"><input type="checkbox" data-price="5000" class="calc-option mt-1 scale-110"> Train — ₹5,000</label></li>
+            <li><label class="flex gap-3 items-start"><input type="checkbox" data-price="3000" class="calc-option mt-1 scale-110"> Deluxe Bus — ₹3,000</label></li>
+          </ul>
+        </div>
+
+        <!-- FOOD PACKAGES -->
+        <div class="p-5 rounded-xl bg-white/22 backdrop-blur-xl border border-white/30 shadow-lg">
+          <div class="text-white font-extrabold text-lg mb-3">Food Packages</div>
+          <ul class="space-y-3 text-white/90">
+            <li><label class="flex gap-3 items-start"><input type="checkbox" data-price="2000" class="calc-option mt-1 scale-110"> Basic Meals — ₹2,000</label></li>
+            <li><label class="flex gap-3 items-start"><input type="checkbox" data-price="6000" class="calc-option mt-1 scale-110"> Premium Dining — ₹6,000</label></li>
+            <li><label class="flex gap-3 items-start"><input type="checkbox" data-price="1800" class="calc-option mt-1 scale-110"> Local Cuisine Tour — ₹1,800</label></li>
+            <li><label class="flex gap-3 items-start"><input type="checkbox" data-price="4000" class="calc-option mt-1 scale-110"> Fine Dining — ₹4,000</label></li>
+          </ul>
+        </div>
+
+        <!-- ACTIVITIES -->
+        <div class="p-5 rounded-xl bg-white/22 backdrop-blur-xl border border-white/30 shadow-lg">
+          <div class="text-white font-extrabold text-lg mb-3">Activities</div>
+          <ul class="space-y-3 text-white/90">
+            <li><label class="flex gap-3 items-start"><input type="checkbox" data-price="1500" class="calc-option mt-1 scale-110"> City Sightseeing — ₹1,500</label></li>
+            <li><label class="flex gap-3 items-start"><input type="checkbox" data-price="4000" class="calc-option mt-1 scale-110"> Adventure Sports — ₹4,000</label></li>
+            <li><label class="flex gap-3 items-start"><input type="checkbox" data-price="2000" class="calc-option mt-1 scale-110"> Cultural Experience — ₹2,000</label></li>
+            <li><label class="flex gap-3 items-start"><input type="checkbox" data-price="3000" class="calc-option mt-1 scale-110"> Spa & Wellness — ₹3,000</label></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- SUMMARY BAR -->
+      <div class="p-4 rounded-xl bg-white/22 backdrop-blur-xl border border-white/30 shadow-lg flex items-center justify-between">
+        <div>
+          <div class="text-white/90 font-semibold">Total Price</div>
+          <div id="totalPrice" class="text-3xl font-extrabold text-white">₹0</div>
+        </div>
+
+        <div class="flex gap-3">
+          <button class="px-3 py-2 rounded-lg border border-white/30 text-white hover:bg-white/8 transition" onclick="showPage('destinationsPage')">Back</button>
+          <button class="px-5 py-2 rounded-full bg-gradient-to-r from-orange-400 to-orange-600 text-white font-semibold shadow hover:-translate-y-1 transition" onclick="confirmSelection()">Confirm Selection</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+<!-- PAGE 5 — CONFIRMATION -->
+<div id="confirmationPage" class="page px-4">
+
+    <button class="text-white text-lg mb-4 ml-2" onclick="showPage('calculatorPage')">← Back</button>
+
+    <h1 class="text-center text-white text-3xl md:text-4xl font-bold mb-4">Booking Confirmation</h1>
+
+    <div class="max-w-4xl mx-auto flex flex-col gap-4">
+
+        <!-- Personal Details -->
+        <div class="p-4 bg-white/22 backdrop-blur-xl border rounded-xl border-white/30 shadow-lg">
+            <h2 class="text-white text-lg font-bold mb-2">Personal Details</h2>
+            <p class="text-white/90"><strong>Name:</strong> <span id="confirmName"></span></p>
+            <p class="text-white/90"><strong>Email:</strong> <span id="confirmEmail"></span></p>
+            <p class="text-white/90"><strong>Phone:</strong> <span id="confirmPhone"></span></p>
+            <p class="text-white/90"><strong>PIN:</strong> <span id="confirmPin"></span></p>
+            <p class="text-white/90"><strong>Country:</strong> <span id="confirmCountry"></span></p>
+        </div>
+
+        <!-- Selected Packages -->
+        <div class="p-4 bg-white/22 backdrop-blur-xl border rounded-xl border-white/30 shadow-lg">
+            <h2 class="text-white text-lg font-bold mb-2">Selected Packages</h2>
+            <pre id="selectedPackages" class="text-white/90 whitespace-pre-line"></pre>
+        </div>
+
+        <!-- Total Price -->
+        <div class="p-4 bg-white/22 backdrop-blur-xl border rounded-xl border-white/30 shadow-lg">
+            <h2 class="text-white text-lg font-bold mb-2">Total Price</h2>
+            <p id="confirmTotalPrice" class="text-2xl md:text-3xl font-extrabold text-white"></p>
+        </div>
+
+        <!-- Proceed to Payment -->
+        <div class="flex justify-center mt-6">
+            <button onclick="goToPayment()" 
+                class="px-6 py-3 rounded-full bg-gradient-to-r from-orange-400 to-orange-600 text-white font-semibold shadow-lg hover:-translate-y-1 transition">
+                Proceed to Payment
+            </button>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- PAGE 6 — PAYMENT PAGE -->
+<div id="paymentPage" class="page px-4">
+    <button class="text-white text-lg mb-4 ml-2" onclick="showPage('confirmationPage')">← Back</button>
+
+    <h1 class="text-center text-white text-3xl md:text-4xl font-bold mb-6">Payment</h1>
+
+    <div class="max-w-3xl mx-auto p-6 md:p-8 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/12 shadow-xl">
+
+        <div class="text-white/90 text-xl font-semibold mb-4">
+            Total Amount: <span id="paymentTotal" class="text-white font-bold"></span>
+        </div>
+
+        <div class="text-white/80 font-semibold mb-3">Choose Payment Method</div>
+
+        <div id="paymentOptions" class="space-y-4">
+
+            <div class="payment-option" data-method="UPI">
+                <span class="text-2xl mr-3">🟣</span> UPI (GPay / PhonePe / Paytm)
+            </div>
+
+            <div class="payment-option" data-method="Card">
+                <span class="text-2xl mr-3">💳</span> Debit / Credit Card
+            </div>
+
+            <div class="payment-option" data-method="Bank Transfer">
+                <span class="text-2xl mr-3">🏦</span> Bank Transfer (Net Banking)
+            </div>
+
+            <div class="payment-option" data-method="Wallet">
+                <span class="text-2xl mr-3">👛</span> Wallets (Amazon Pay / Paytm)
+            </div>
+
+        </div>
+
+        <button onclick="makePayment()" class="w-full mt-6 px-6 py-3 rounded-full bg-gradient-to-r from-orange-400 to-orange-600 text-white font-semibold hover:-translate-y-1 transition">
+            Pay Now
+        </button>
+
+    </div>
+</div>
+
+
+<!-- BOOKING CONFIRMED POPUP -->
+<div id="bookingPopup" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center hidden z-50">
+    <div class="p-10 rounded-2xl bg-white/15 backdrop-blur-xl border border-white/20 shadow-2xl text-center max-w-md w-[90%]">
+        
+        <h2 class="text-4xl font-bold text-white mb-4">🎉 Booking Confirmed!</h2>
+        
+        <p class="text-white/90 text-xl mb-8">Happy Journey ✈️💜</p>
+
+        <button onclick="downloadPDF()" 
+                class="w-full mb-4 px-6 py-3 rounded-full bg-gradient-to-r from-orange-400 to-orange-600 text-white font-semibold shadow-xl hover:-translate-y-1 transition">
+            Download Ticket (PDF)
+        </button>
+
+        <button onclick="startOver()" 
+                class="w-full px-6 py-3 rounded-lg border border-white/30 text-white hover:bg-white/10 transition">
+            Start Over
+        </button>
+    </div>
+</div>
+
+
+
+  <script src="script.js?v=1000"></script>
+</body>
+</html>
+

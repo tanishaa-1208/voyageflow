@@ -13,6 +13,7 @@ VoyageFlow is a travel planning website designed with HTML, CSS, and JavaScript.
 - HTML
 - CSS
 - JavaScript
+- Tailwind CSS
 
 ## 🔗 Live Demo
 (After enabling GitHub Pages, your link will come here)

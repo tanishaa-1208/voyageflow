@@ -52,22 +52,58 @@
   </header>
 
   <!-- PAGE 1 — WELCOME -->
-  <div id="welcomePage" class="page active px-4">
-    <div class="max-w-4xl mx-auto my-12 p-10 md:p-12 rounded-2xl bg-white/12 backdrop-blur-xl border border-white/12 shadow-2xl text-center transform transition duration-500 ease-out animate-enter-up">
-      <h1 class="logo text-5xl md:text-6xl font-semibold text-white mb-3">VoyageFlow</h1>
-      <p class="italic font-semibold text-white/90 text-base md:text-lg mb-6">Your journey starts here!</p>
-      <button class="px-8 py-3 rounded-full bg-gradient-to-r from-orange-400 to-orange-600 text-white font-semibold shadow-lg transform transition hover:-translate-y-1"
-              onclick="showPage('registrationPage')">
-        Get Started
-      </button>
+  <!-- PAGE 1 — WELCOME -->
+<div id="welcomePage" class="page active px-4">
+<div class="w-[90%] md:w-[70%] lg:w-[60%] mx-auto my-20 p-12 md:p-16 rounded-2xl bg-white/12 backdrop-blur-xl border border-white/12 shadow-2xl text-center transform transition duration-500 ease-out animate-enter-up">
+
+    <h1 class="logo text-5xl md:text-6xl font-semibold text-white mb-3">
+  VoyageFlow
+</h1>
+
+<p class="italic font-semibold text-white/90 text-base md:text-lg mb-12">
+  Your journey starts here!
+</p>
+
+<p class="text-white/80 text-sm md:text-base mb-10">
+  Plan your trip, choose packages, and get an instant booking ticket.
+</p>
+
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+
+      <div class="bg-white/10 rounded-xl p-4 backdrop-blur-md border border-white/20">
+        <div class="text-2xl mb-2">✈️</div>
+        <p class="text-white font-semibold">Plan Your Trip</p>
+        <p class="text-white/70 text-sm">Choose your dream destination</p>
+      </div>
+
+      <div class="bg-white/10 rounded-xl p-4 backdrop-blur-md border border-white/20">
+        <div class="text-2xl mb-2">💸</div>
+        <p class="text-white font-semibold">Transparent Pricing</p>
+        <p class="text-white/70 text-sm">Select travel, food & activities</p>
+      </div>
+
+      <div class="bg-white/10 rounded-xl p-4 backdrop-blur-md border border-white/20">
+        <div class="text-2xl mb-2">📄</div>
+        <p class="text-white font-semibold">Instant Ticket</p>
+        <p class="text-white/70 text-sm">Download your PDF ticket</p>
+      </div>
+
     </div>
+
+    <button class="px-8 py-3 rounded-full bg-gradient-to-r from-orange-400 to-orange-600 text-white font-semibold shadow-lg transform transition hover:-translate-y-1"
+            onclick="showPage('registrationPage')">
+      Get Started
+    </button>
   </div>
+</div>
+
 
   <!-- PAGE 2 — REGISTRATION -->
   <div id="registrationPage" class="page px-4">
     <button class="text-white text-lg mb-4 ml-2" onclick="showPage('welcomePage')">← Back</button>
 
-    <div class="max-w-3xl mx-auto p-6 md:p-8 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/12 shadow-xl transform transition animate-enter-up">
+<div class="w-[90%] md:w-[70%] lg:w-[60%] mx-auto my-16 p-10 md:p-14 rounded-2xl bg-white/12 backdrop-blur-xl border border-white/12 shadow-2xl transform transition animate-enter-up">
       <h1 class="text-2xl md:text-3xl font-bold text-white mb-4">Registration</h1>
 
       <form id="registrationForm">

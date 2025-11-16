@@ -98,9 +98,37 @@ if (regForm) {
         userData.pin = document.getElementById('pin').value.trim();
         userData.country = document.getElementById('country').value.trim();
 
+        /* --------- TEMP ------------------ */
+        userData.travelers = Number(document.getElementById('travelers').value);
+        /* --------- TEMP ------------------ */
+
         showPage("destinationsPage");
     });
 }
+
+// Generate extra traveler fields dynamically
+document.getElementById("travelers").addEventListener("input", function () {
+    const count = Number(this.value);
+    const container = document.getElementById("travelersContainer");
+    container.innerHTML = ""; // clear old fields
+
+    for (let i = 2; i <= count; i++) {
+        const block = document.createElement("div");
+        block.className = "p-4 bg-white/10 rounded-xl border border-white/20";
+
+        block.innerHTML = `
+            <label class="text-white text-sm font-semibold">Traveler ${i} — Full Name *</label>
+            <input id="travelerName_${i}" type="text" required
+                   class="w-full px-3 py-2 rounded-lg bg-white/20 text-white outline-none focus:bg-white/30 focus:shadow transition">
+
+            <label class="text-white text-sm font-semibold mt-2 block">Traveler ${i} — Phone *</label>
+            <input id="travelerPhone_${i}" type="text" required
+                   class="w-full px-3 py-2 rounded-lg bg-white/20 text-white outline-none focus:bg-white/30 focus:shadow transition">
+        `;
+        container.appendChild(block);
+    }
+});
+
 
 /* ----------------------------------------------------
    🚀 DESTINATIONS SEARCH + SELECT
@@ -166,7 +194,9 @@ function calculateTotal() {
         if (cb.checked) newTotal += Number(cb.dataset.price);
     });
 
-    total = newTotal;
+    /* total = newTotal; */
+    total = newTotal * (userData.travelers || 1);
+
     updateTotalUI();
 }
 
@@ -191,6 +221,18 @@ function confirmSelection() {
     document.getElementById("confirmPhone").innerText = userData.phone;
     document.getElementById("confirmPin").innerText = userData.pin;
     document.getElementById("confirmCountry").innerText = userData.country;
+    userData.travelers = Number(document.getElementById('travelers').value);
+    // Save additional traveler details
+userData.otherTravelers = [];
+
+for (let i = 2; i <= userData.travelers; i++) {
+    const tName = document.getElementById(`travelerName_${i}`)?.value || "";
+    const tPhone = document.getElementById(`travelerPhone_${i}`)?.value || "";
+
+    userData.otherTravelers.push({ name: tName, phone: tPhone });
+}
+
+
 
     const selected = [];
     document.querySelectorAll('.calc-option').forEach(cb => {
